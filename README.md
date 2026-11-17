@@ -92,3 +92,4 @@ After the workshop, clear the lab phrase from the page and revoke temporary prov
 ## License
 
 MIT. See [LICENSE](LICENSE).
+
