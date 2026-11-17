@@ -1,0 +1,473 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Explore a three-level retail dashboard, investigate a segment and take reviewed actions from real data."
+    />
+    <meta name="color-scheme" content="light" />
+    <title>Northstar · Action Lab</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <script src="./app.js" defer></script>
+  </head>
+  <body class="dashboard-app">
+    <a class="skip-link" href="#main">Skip to dashboard</a>
+    <header class="topbar">
+      <a
+        class="brand"
+        href="./index.html"
+        aria-label="Northstar Action Lab home"
+        ><span class="brand-symbol" aria-hidden="true">✳︎</span
+        ><span
+          >northstar<span class="brand-divider">/</span
+          ><span class="brand-lab">action lab</span></span
+        ></a
+      >
+      <p class="sidebar-section-label">Retail operations</p>
+      <nav class="top-nav" aria-label="Main navigation">
+        <button id="nav-overview" type="button" aria-current="page">
+          Overview
+        </button>
+        <button id="nav-segment" type="button">Segments</button>
+        <button id="nav-record" type="button">Record</button>
+        <a href="#history"
+          >Activity <span id="nav-count" class="nav-count">0</span></a
+        >
+        <a href="./start-here.html">Guide ↗</a>
+      </nav>
+      <a
+        class="button copy-button"
+        href="https://github.com/josncmar/ie-apps-action-lab"
+        target="_blank"
+        rel="noopener noreferrer"
+        >Get your own copy ↗</a
+      >
+    </header>
+    <main id="main" class="page-shell dashboard-shell">
+      <section class="lab-toolbar" aria-label="Data and connection settings">
+        <div class="data-status">
+          <span class="status-dot"></span
+          ><span id="data-status" role="status"
+            >Loading 24 synthetic orders…</span
+          >
+        </div>
+        <details id="connection-settings">
+          <summary>Connections &amp; lab access</summary>
+          <div class="toolbar-fields">
+            <label for="lab-access"
+              >Lab access phrase<input
+                id="lab-access"
+                type="password"
+                autocomplete="off"
+                placeholder="For configured service calls" /></label
+            ><button
+              id="refresh-data"
+              class="button secondary small"
+              type="button"
+            >
+              Refresh data &amp; connections ↻</button
+            ><button id="clear-access" class="quiet-button" type="button">
+              Clear phrase
+            </button>
+          </div>
+          <p class="small muted">
+            The phrase stays in memory. Provider keys belong on the server. You
+            can always try an action; missing settings return a clear error.
+          </p>
+          <p id="connection-status" class="small muted" role="status">
+            No connection check has completed.
+          </p>
+        </details>
+      </section>
+      <nav
+        id="breadcrumbs"
+        class="breadcrumbs"
+        aria-label="Analysis breadcrumb"
+      ></nav>
+      <div id="load-error" class="load-error" role="alert" hidden></div>
+      <section id="overview" class="overview" aria-labelledby="view-title">
+        <div class="section-heading">
+          <div>
+            <p id="view-level" class="eyebrow">LEVEL 01 · OVERVIEW</p>
+            <h2 id="view-title" tabindex="-1">Operations overview</h2>
+          </div>
+          <div class="date-chip">
+            Snapshot
+            <time id="snapshot-date" datetime="2026-11-17">17 Nov 2026</time>
+          </div>
+        </div>
+        <div class="scope-toolbar">
+          <div>
+            <p id="scope-summary">All 24 orders</p>
+            <div id="scope-chips" class="scope-chips"></div>
+          </div>
+          <div class="scope-actions">
+            <button id="download-csv" class="button secondary" type="button">
+              Download CSV ↓
+            </button>
+          </div>
+        </div>
+        <div id="global-filters" class="filters global-filters">
+          <label class="search-field"
+            ><span class="sr-only">Search orders</span
+            ><span aria-hidden="true">⌕</span
+            ><input
+              id="search"
+              type="search"
+              placeholder="Search order, product or team…"
+              autocomplete="off" /></label
+          ><label class="filter-field"
+            ><span class="sr-only">Filter by signal</span
+            ><select id="signal-filter">
+              <option value="all">All signals</option>
+              <option value="attention">Needs attention</option>
+              <option value="negative">Negative contribution</option>
+              <option value="late">Late delivery</option>
+              <option value="refund">High refund</option>
+              <option value="clear">No signals</option>
+            </select></label
+          ><label class="filter-field"
+            ><span class="sr-only">Filter by delivery status</span
+            ><select id="status-filter">
+              <option value="all">All statuses</option>
+              <option value="delivered">Delivered</option>
+              <option value="in_transit">In transit</option>
+              <option value="processing">Processing</option>
+            </select></label
+          ><button id="clear-filters" class="quiet-button" type="button">
+            Reset filters
+          </button>
+        </div>
+        <div id="metrics" class="metrics" aria-live="polite">
+          <article class="metric">
+            <p>Net revenue</p>
+            <strong id="metric-revenue">—</strong
+            ><span>Sales less refunds</span>
+          </article>
+          <article class="metric">
+            <p>Contribution</p>
+            <strong id="metric-profit">—</strong
+            ><span>Net revenue less product cost</span>
+          </article>
+          <article class="metric">
+            <p>Orders in view</p>
+            <strong id="metric-orders">—</strong
+            ><span id="metric-order-note">All channels and regions</span>
+          </article>
+          <article class="metric metric-attention">
+            <p>Need a closer look ↗</p>
+            <strong id="metric-attention">—</strong
+            ><span>Orders with at least one signal</span>
+          </article>
+        </div>
+        <div id="overview-view">
+          <aside
+            class="segment-banner insight-callout"
+            aria-label="A record worth investigating"
+          >
+            <div>
+              <h3 id="case-title">Follow the margin signal</h3>
+              <p id="case-summary">
+                Explore the Northeast / Workspace segment and inspect NS-1041.
+              </p>
+            </div>
+            <button id="explore-case" class="button secondary" type="button">
+              Investigate this segment →
+            </button>
+          </aside>
+          <div class="chart-grid">
+            <section class="panel revenue-panel" aria-labelledby="region-title">
+              <div class="panel-heading">
+                <div>
+                  <p class="eyebrow">DRILL INTO A REGION</p>
+                  <h3 id="region-title">Net revenue by region</h3>
+                </div>
+                <span class="chart-unit">Select a bar · actions ⋯</span>
+              </div>
+              <div
+                id="region-chart"
+                class="region-chart"
+                aria-label="Net revenue by region"
+              ></div>
+            </section>
+            <section
+              class="panel revenue-panel"
+              aria-labelledby="category-title"
+            >
+              <div class="panel-heading">
+                <div>
+                  <p class="eyebrow">DRILL INTO A CATEGORY</p>
+                  <h3 id="category-title">Contribution by category</h3>
+                </div>
+                <span class="chart-unit">Select a bar · actions ⋯</span>
+              </div>
+              <div
+                id="category-chart"
+                class="category-chart region-chart"
+                aria-label="Contribution by category"
+              ></div>
+            </section>
+          </div>
+          <section class="panel signal-panel" aria-labelledby="signals-title">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">WHERE TO LOOK</p>
+                <h3 id="signals-title">Signals worth investigating</h3>
+              </div>
+              <span class="signal-symbol" aria-hidden="true">↗︎</span>
+            </div>
+            <div id="signal-chart" class="signal-chart"></div>
+            <p class="chart-note">
+              A flag is a reason to investigate, not a conclusion. Click a
+              signal to explore the underlying records.
+            </p>
+          </section>
+        </div>
+      </section>
+      <section
+        id="workspace"
+        class="workspace-grid"
+        aria-label="Records in the current view"
+      >
+        <div id="segment-view" hidden>
+          <section class="segment-banner" aria-labelledby="segment-title">
+            <div>
+              <p class="eyebrow">LEVEL 02 · DIAGNOSIS</p>
+              <h3 id="segment-title">Selected segment</h3>
+              <p id="segment-description"></p>
+            </div>
+          </section>
+          <section class="panel revenue-panel">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">NARROW THE QUESTION</p>
+                <h3 id="segment-chart-title">Segment breakdown</h3>
+              </div>
+              <span class="chart-unit">Select a bar · actions ⋯</span>
+            </div>
+            <div id="segment-chart" class="region-chart"></div>
+          </section>
+        </div>
+
+        <div id="orders-panel" class="panel orders-panel">
+          <div class="panel-heading">
+            <div>
+              <h2 id="orders-title">Order explorer</h2>
+            </div>
+            <span id="order-count" class="count-pill">24 orders</span>
+          </div>
+          <div class="table-scroll">
+            <table>
+              <caption class="sr-only">
+                Choose an order ID or its Details button to inspect source
+                values and contextual actions.
+              </caption>
+              <thead>
+                <tr>
+                  <th scope="col">Order / product</th>
+                  <th scope="col">Net sales</th>
+                  <th scope="col">Margin</th>
+                  <th scope="col">Signal</th>
+                  <th scope="col"><span class="sr-only">Details</span></th>
+                </tr>
+              </thead>
+              <tbody id="orders-body"></tbody>
+            </table>
+            <div id="empty-orders" class="empty-state" hidden>
+              <span aria-hidden="true">⌕</span>
+              <h3>No orders match these filters</h3>
+              <p>Change the filters or return to the overview.</p>
+            </div>
+          </div>
+          <div class="table-footer">
+            <span id="table-scope-note"
+              >24 fictional source records. No customer data.</span
+            ><span>Click a row or use its Details button →</span>
+          </div>
+        </div>
+        <aside
+          id="order-detail"
+          class="panel detail-panel"
+          aria-label="Level 3 record detail"
+          hidden
+        ></aside>
+      </section>
+      <details id="history" class="panel history-panel">
+        <summary class="history-summary">
+          <span>Action activity</span
+          ><span id="history-summary-count">No actions yet</span>
+        </summary>
+        <div class="panel-heading">
+          <div>
+            <p class="eyebrow">CLOSE THE LOOP</p>
+            <h2 id="history-title">Action activity</h2>
+            <p class="panel-description">
+              Requests and verification evidence are saved in this browser.
+            </p>
+          </div>
+          <div class="history-tools">
+            <button
+              id="export-history"
+              class="button secondary small"
+              type="button"
+            >
+              Export JSON ↓
+            </button>
+          </div>
+        </div>
+        <div
+          id="storage-warning"
+          class="storage-warning"
+          role="status"
+          hidden
+        ></div>
+        <div id="history-list"></div>
+        <button
+          id="show-history-toggle"
+          type="button"
+          class="quiet-button"
+          hidden
+        >
+          Show all activity
+        </button>
+      </details>
+      <footer class="page-footer">
+        <p>
+          <strong>Northstar</strong> is fictional. All 24 records are synthetic.
+        </p>
+        <a href="https://ie-lessons-tracker.vercel.app/course/3"
+          >Submit your work in the course portal ↗</a
+        >
+      </footer>
+    </main>
+    <dialog
+      id="action-dialog"
+      aria-labelledby="dialog-title"
+      aria-describedby="dialog-description"
+    >
+      <form id="action-form">
+        <div class="dialog-header">
+          <div class="dialog-heading-labels">
+            <p class="eyebrow">REVIEW BEFORE YOU ACT</p>
+            <div id="dialog-service"></div>
+          </div>
+          <button
+            id="close-dialog"
+            type="button"
+            class="icon-button"
+            aria-label="Close action review"
+          >
+            ×
+          </button>
+        </div>
+        <h2 id="dialog-title">Review this action</h2>
+        <p id="dialog-description"></p>
+        <div id="review-context" class="review-context"></div>
+        <div id="action-fields">
+          <label id="recipient-field" class="form-field" hidden
+            >Recipient email<input
+              id="action-recipient"
+              type="email"
+              maxlength="254"
+              placeholder="Your own email address"
+            /><small
+              >Use your own address for the free Resend test sender.</small
+            ></label
+          >
+          <label id="title-field" class="form-field"
+            ><span id="title-label">Title</span
+            ><input id="action-title" maxlength="140"
+          /></label>
+          <label id="reason-field" class="form-field"
+            ><span id="reason-label">Message</span
+            ><textarea
+              id="action-reason"
+              required
+              minlength="10"
+              maxlength="8000"
+              rows="5"
+            ></textarea>
+          </label>
+          <label id="dialog-access-field" class="form-field"
+            >Lab access phrase<input
+              id="dialog-access"
+              type="password"
+              autocomplete="off"
+              placeholder="Required when the connection is configured"
+            /><small
+              >Kept in memory only. This is not a provider API key.</small
+            ></label
+          >
+          <div id="numeric-editor" class="numeric-editor" hidden>
+            <label class="numeric-field"
+              >Value to correct<select id="edit-field">
+                <option value="cost">Product cost</option>
+                <option value="revenue">Revenue</option>
+                <option value="refund">Refund</option>
+              </select></label
+            >
+            <label class="numeric-field"
+              >New value · USD<input
+                id="edit-value"
+                type="number"
+                min="0"
+                max="1000000000"
+                step="any"
+            /></label>
+            <div id="calculation-preview" class="calculation-preview"></div>
+          </div>
+        </div>
+        <section id="exact-preview" class="exact-preview" hidden>
+          <p class="eyebrow">EXACT ACTION PREVIEW</p>
+          <h3 id="preview-title"></h3>
+          <p id="preview-destination" class="preview-destination"></p>
+          <pre id="preview-body"></pre>
+          <pre id="preview-diff" class="proposal-diff" hidden></pre>
+          <label class="confirmation-check"
+            ><input id="confirm-consent" type="checkbox" /><span
+              >I have reviewed the scope, destination and values. Run this
+              action once.</span
+            ></label
+          >
+        </section>
+        <div
+          id="form-status"
+          class="state-banner"
+          role="status"
+          aria-live="polite"
+        ></div>
+        <div class="dialog-actions">
+          <button id="cancel-action" type="button" class="button secondary">
+            Cancel</button
+          ><button
+            id="back-to-edit"
+            type="button"
+            class="button secondary"
+            hidden
+          >
+            Edit request</button
+          ><button id="prepare-action" type="submit" class="button primary">
+            Review exact action →</button
+          ><button
+            id="confirm-action"
+            type="button"
+            class="button primary"
+            hidden
+          >
+            Confirm action →
+          </button>
+        </div>
+      </form>
+    </dialog>
+    <div
+      id="context-menu"
+      class="context-menu"
+      role="menu"
+      aria-label="Actions for the selected data"
+      hidden
+    ></div>
+    <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+  </body>
+</html>

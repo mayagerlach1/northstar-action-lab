@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="340" viewBox="0 0 1120 340" role="img" aria-labelledby="title desc">
+  <title id="title">Turn a signal into a review decision</title>
+  <desc id="desc">A synthetic order with negative margin leads to reviewing its evidence, selecting the responsible team, and deciding whether to request investigation or take no action. A signal is not proof of the cause.</desc>
+  <defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#087f8c"/></marker></defs>
+  <rect width="1120" height="340" rx="20" fill="#f6f7f3"/>
+  <g font-family="Arial,Helvetica,sans-serif">
+    <text x="32" y="38" fill="#087f8c" font-size="13" font-weight="700" letter-spacing="2">01 / BUSINESS WORKFLOW</text>
+    <text x="32" y="72" fill="#102b46" font-size="24" font-weight="700">A useful action starts with a question worth answering.</text>
+    <g stroke="#cbd7dc" fill="white"><rect x="32" y="114" width="226" height="142" rx="12"/><rect x="310" y="114" width="226" height="142" rx="12"/><rect x="588" y="114" width="226" height="142" rx="12"/><rect x="866" y="114" width="222" height="142" rx="12"/></g>
+    <g stroke="#087f8c" stroke-width="3" marker-end="url(#arrow)"><path d="M264 185H300"/><path d="M542 185H578"/><path d="M820 185H856"/></g>
+    <g fill="#102b46" font-size="20" font-weight="700"><text x="52" y="150">Signal</text><text x="330" y="150">Review evidence</text><text x="608" y="150">Choose an owner</text><text x="886" y="150">Make a decision</text></g>
+    <g fill="#4f6372" font-size="16"><text x="52" y="183">Order NS-1041</text><text x="52" y="208">Profit: −$120</text><text x="52" y="233">Reason to investigate</text><text x="330" y="183">Revenue, refund, cost</text><text x="330" y="208">Record ID + notes</text><text x="330" y="233">What is still unknown?</text><text x="608" y="183">Finance operations</text><text x="608" y="208">What should they check?</text><text x="608" y="233">What outcome is useful?</text><text x="886" y="183">Request a review</text><text x="886" y="208">or cancel / take no action</text><text x="886" y="233">Do not auto-correct data</text></g>
+    <text x="32" y="302" fill="#4f6372" font-size="15">Supplied: inspect, review and send a real synthetic event. Your change: refine an alert rule or review message.</text>
+  </g>
+</svg>

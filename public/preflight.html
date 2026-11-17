@@ -1,0 +1,455 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light" />
+    <meta
+      name="description"
+      content="Try a message draft, then review four real integrations for one synthetic Northstar order."
+    />
+    <title>Action preflight · Northstar</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="./preflight.css" />
+    <script src="./preflight.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to action preflight</a>
+    <header class="topbar">
+      <a
+        class="brand"
+        href="./index.html"
+        aria-label="Northstar Action Lab home"
+        ><span class="brand-symbol" aria-hidden="true">✳︎</span
+        ><span
+          >northstar<span class="brand-divider">/</span
+          ><span class="brand-lab">action lab</span></span
+        ></a
+      >
+      <nav class="top-nav" aria-label="Main navigation">
+        <a href="./index.html">Dashboard</a
+        ><a href="./preflight.html" aria-current="page">Four actions</a
+        ><a href="./start-here.html">Workshop guide ↗</a>
+      </nav>
+    </header>
+    <main id="main" class="page-shell preflight-shell">
+      <section class="preflight-hero" aria-labelledby="page-title">
+        <div>
+          <p class="eyebrow">
+            <span class="line-dot"></span> SYNTHETIC ORDER · REAL INTEGRATIONS
+          </p>
+          <h1 id="page-title">
+            One signal.<br /><span>Four ways to act.</span>
+          </h1>
+          <p class="hero-description">
+            Warm up with a message draft, then follow four exercises from
+            easiest to hardest: Email → Supabase → Trello → GitHub. Review each
+            destination and exact content before confirming.
+          </p>
+        </div>
+        <aside class="source-card" aria-labelledby="source-title">
+          <p class="eyebrow">THE SOURCE RECORD</p>
+          <h2 id="source-title">NS-1041 <span>Summit desk bundle</span></h2>
+          <dl class="source-facts">
+            <div>
+              <dt>Revenue</dt>
+              <dd>$1,200</dd>
+            </div>
+            <div>
+              <dt>Product cost</dt>
+              <dd>$1,320</dd>
+            </div>
+            <div>
+              <dt>Contribution</dt>
+              <dd class="negative">−$120</dd>
+            </div>
+            <div>
+              <dt>Margin</dt>
+              <dd class="negative">−10%</dd>
+            </div>
+          </dl>
+          <p>
+            An introductory discount and a freight adjustment need review. The
+            signal is a reason to investigate, not a confirmed error.
+          </p>
+          <span class="synthetic-chip"
+            >Fictional record · no customer data</span
+          >
+        </aside>
+      </section>
+
+      <section class="access-panel" aria-labelledby="access-title">
+        <div class="access-copy">
+          <p class="eyebrow">BEFORE A REAL ACTION</p>
+          <h2 id="access-title">Review it. Try it. See what is missing.</h2>
+          <p>
+            Every exercise can be opened and tried. If its connection is
+            incomplete, the server tells you which settings are missing.
+            Provider API keys belong in your server settings.
+          </p>
+        </div>
+        <div class="access-controls">
+          <label for="lab-access"
+            >Lab access phrase
+            <span>required by configured services</span></label
+          >
+          <div class="access-row">
+            <input
+              id="lab-access"
+              type="password"
+              autocomplete="off"
+              spellcheck="false"
+              placeholder="Enter the instructor’s access phrase"
+              aria-describedby="access-note"
+            /><button id="clear-access" class="button secondary" type="button">
+              Clear
+            </button>
+          </div>
+          <p id="access-note">
+            Kept in this page’s memory only. Cleared when you leave or reload.
+          </p>
+          <button id="check-services" class="button secondary" type="button">
+            Check configured services ↻
+          </button>
+          <p
+            id="service-status"
+            class="connection-status"
+            role="status"
+            aria-live="polite"
+          >
+            Loading the action previews. Checking connections never triggers an
+            action.
+          </p>
+        </div>
+      </section>
+
+      <section
+        class="action-grid"
+        aria-label="Draft demo and four real action paths"
+      >
+        <article class="action-card draft-card" aria-labelledby="draft-title">
+          <div class="card-heading">
+            <span class="action-number">00</span
+            ><span class="state-badge state-draft">Draft only</span>
+          </div>
+          <p class="eyebrow">WARM-UP · EMAIL / TEAMS DRAFT</p>
+          <h2 id="draft-title">Start a conversation.</h2>
+          <p class="action-description">
+            Open a prefilled message in your own mail or Teams client. You
+            review and send it there.
+          </p>
+          <div class="draft-fields">
+            <label for="draft-channel"
+              >Open in<select id="draft-channel">
+                <option value="email">Email draft</option>
+                <option value="teams">Teams chat draft</option>
+              </select></label
+            ><label for="draft-recipient"
+              >Your own email address<input
+                id="draft-recipient"
+                type="email"
+                autocomplete="email"
+                placeholder="you@example.com"
+                maxlength="254" /></label
+            ><label id="tenant-field" for="draft-tenant" hidden
+              >Teams tenant ID <span>optional</span
+              ><input
+                id="draft-tenant"
+                type="text"
+                autocomplete="off"
+                placeholder="Tenant UUID, if your organization requires it"
+                maxlength="36"
+            /></label>
+          </div>
+          <details class="preview-block">
+            <summary>Review the draft content</summary>
+            <h3 id="draft-subject"></h3>
+            <pre id="draft-body"></pre>
+          </details>
+          <a
+            id="open-draft"
+            class="button primary disabled-link"
+            aria-disabled="true"
+            >Open email draft ↗</a
+          >
+          <p id="draft-note" class="action-note" role="status">
+            Enter your own recipient address to prepare the link. No message is
+            sent by this page.
+          </p>
+        </article>
+        <article
+          class="action-card"
+          data-provider="email"
+          aria-labelledby="email-title"
+        >
+          <div class="card-heading">
+            <span class="action-number">01</span
+            ><span id="email-state" class="state-badge">Not checked</span>
+          </div>
+          <p class="eyebrow">RESEND</p>
+          <h2 id="email-title">Send yourself a test.</h2>
+          <p class="action-description">
+            Send one real email to the server-configured test recipient.
+            Provider acceptance alone does not prove inbox delivery.
+          </p>
+          <div class="destination">
+            <span>Destination</span>
+            <p id="email-destination">Loading the server preview.</p>
+          </div>
+          <p id="email-detail" class="provider-detail">
+            No action has been requested.
+          </p>
+          <details class="preview-block" id="email-preview" hidden>
+            <summary>Review the exact email content</summary>
+            <h3 id="email-preview-title"></h3>
+            <pre id="email-preview-body"></pre>
+          </details>
+          <button
+            class="button primary review-action"
+            data-action="email"
+            type="button"
+            disabled
+          >
+            Review test email →
+          </button>
+          <div
+            id="email-result"
+            class="action-result"
+            role="status"
+            aria-live="polite"
+            hidden
+          ></div>
+        </article>
+        <article
+          class="action-card"
+          data-provider="supabase"
+          aria-labelledby="supabase-title"
+        >
+          <div class="card-heading">
+            <span class="action-number">02</span
+            ><span id="supabase-state" class="state-badge">Not checked</span>
+          </div>
+          <p class="eyebrow">SUPABASE</p>
+          <h2 id="supabase-title">Save a reviewed record.</h2>
+          <p class="action-description">
+            Write the reviewed status for NS-1041 to the configured database.
+            Reload this page and read it again to see that the review survives
+            outside your browser.
+          </p>
+          <div class="destination">
+            <span>Destination</span>
+            <p id="supabase-destination">Loading the server preview.</p>
+          </div>
+          <p id="supabase-detail" class="provider-detail">
+            No action has been requested.
+          </p>
+          <details class="preview-block" id="supabase-preview" hidden>
+            <summary>Review the exact database write</summary>
+            <h3 id="supabase-preview-title"></h3>
+            <pre id="supabase-preview-body"></pre>
+          </details>
+          <button
+            class="button primary review-action"
+            data-action="supabase"
+            type="button"
+            disabled
+          >
+            Review database save →
+          </button>
+          <div
+            id="supabase-result"
+            class="action-result"
+            role="status"
+            aria-live="polite"
+            hidden
+          ></div>
+          <section
+            class="saved-review-panel"
+            aria-labelledby="saved-review-title"
+          >
+            <p class="eyebrow">INDEPENDENT DATABASE READ</p>
+            <h3 id="saved-review-title">What is saved now?</h3>
+            <div
+              id="supabase-saved-review"
+              class="saved-review-evidence"
+              role="status"
+              aria-live="polite"
+            >
+              <p>
+                Not checked. Enter the lab access phrase and check configured
+                services to read the saved review from the server.
+              </p>
+            </div>
+            <button
+              id="read-saved-review"
+              class="button secondary small"
+              type="button"
+              disabled
+            >
+              Read saved review again ↻
+            </button>
+            <p class="action-note">
+              This performs a GET only. It never saves again and does not use
+              this browser’s local action history as proof.
+            </p>
+          </section>
+        </article>
+        <article
+          class="action-card"
+          data-provider="trello"
+          aria-labelledby="trello-title"
+        >
+          <div class="card-heading">
+            <span class="action-number">03</span
+            ><span id="trello-state" class="state-badge">Not checked</span>
+          </div>
+          <p class="eyebrow">TRELLO</p>
+          <h2 id="trello-title">Create a review card.</h2>
+          <p class="action-description">
+            Create one real card in the server-configured test list. Read-back
+            verification must confirm the card exists.
+          </p>
+          <div class="destination">
+            <span>Destination</span>
+            <p id="trello-destination">Loading the server preview.</p>
+          </div>
+          <p id="trello-detail" class="provider-detail">
+            No action has been requested.
+          </p>
+          <details class="preview-block" id="trello-preview" hidden>
+            <summary>Review the exact card content</summary>
+            <h3 id="trello-preview-title"></h3>
+            <pre id="trello-preview-body"></pre>
+          </details>
+          <button
+            class="button primary review-action"
+            data-action="trello"
+            type="button"
+            disabled
+          >
+            Review card creation →
+          </button>
+          <div
+            id="trello-result"
+            class="action-result"
+            role="status"
+            aria-live="polite"
+            hidden
+          ></div>
+        </article>
+        <article
+          class="action-card"
+          data-provider="github"
+          aria-labelledby="github-title"
+        >
+          <div class="card-heading">
+            <span class="action-number">04</span
+            ><span id="github-state" class="state-badge">Not checked</span>
+          </div>
+          <p class="eyebrow">GITHUB</p>
+          <h2 id="github-title">Open a review PR.</h2>
+          <p class="action-description">
+            Create the proposed file change and open a real pull request in the
+            configured test repository. It will not be merged.
+          </p>
+          <div class="destination">
+            <span>Destination</span>
+            <p id="github-destination">Loading the server preview.</p>
+          </div>
+          <p id="github-detail" class="provider-detail">
+            No action has been requested.
+          </p>
+          <details class="preview-block" id="github-preview" hidden>
+            <summary>Review the exact PR and file change</summary>
+            <h3 id="github-preview-title"></h3>
+            <pre id="github-preview-body"></pre>
+            <p class="diff-label">Proposed file change</p>
+            <pre id="github-preview-diff" class="diff-preview"></pre>
+          </details>
+          <button
+            class="button primary review-action"
+            data-action="github"
+            type="button"
+            disabled
+          >
+            Review pull request →
+          </button>
+          <div
+            id="github-result"
+            class="action-result"
+            role="status"
+            aria-live="polite"
+            hidden
+          ></div>
+        </article>
+      </section>
+      <aside class="preflight-footnote">
+        <strong>Evidence before conclusions.</strong> “Accepted” means the
+        provider accepted a request. “Verified” means the server reports a
+        successful read-back check. An unknown outcome is not permission to send
+        again. Keep the request ID and inspect the provider. Nonsecret request
+        evidence is saved in this browser to prevent accidental repeats after a
+        reload; the access phrase is never saved.
+      </aside>
+      <footer class="page-footer">
+        <span
+          ><strong>Northstar</strong> · Fictional operations, observable
+          actions.</span
+        ><a href="./index.html">Return to the dashboard →</a>
+      </footer>
+    </main>
+    <dialog
+      id="confirm-dialog"
+      aria-labelledby="confirm-title"
+      aria-describedby="confirm-description"
+    >
+      <form id="confirm-form">
+        <div class="dialog-header">
+          <p class="eyebrow">REVIEW BEFORE SENDING</p>
+          <button
+            id="close-confirm"
+            class="dialog-close"
+            type="button"
+            aria-label="Close review"
+          >
+            ×
+          </button>
+        </div>
+        <h2 id="confirm-title">Confirm a real action</h2>
+        <p id="confirm-description"></p>
+        <div class="destination">
+          <span>Destination</span>
+          <p id="confirm-destination"></p>
+        </div>
+        <div class="confirmation-preview">
+          <h3 id="confirm-preview-title"></h3>
+          <pre id="confirm-preview-body"></pre>
+          <pre id="confirm-preview-diff" class="diff-preview" hidden></pre>
+        </div>
+        <label class="confirmation-check"
+          ><input id="confirm-consent" type="checkbox" required /><span
+            >I have reviewed this destination and content. Perform this real
+            test action once.</span
+          ></label
+        >
+        <p class="action-note">
+          The server checks configuration and access before acting. Missing
+          settings produce an error, not a successful action. Closing this
+          dialog sends nothing.
+        </p>
+        <div class="dialog-actions">
+          <button id="cancel-confirm" class="button secondary" type="button">
+            Cancel</button
+          ><button
+            id="confirm-send"
+            class="button primary"
+            type="submit"
+            disabled
+          >
+            Confirm real action →
+          </button>
+        </div>
+      </form>
+    </dialog>
+  </body>
+</html>
